@@ -9,14 +9,14 @@ def place_stamp(stamper, x: float, y: float, color=(0,0,0), size=1, rotation=0, 
     """
     Draws the authors initials
     """
-    default_size = stamper.window_width() * 0.125
-    size = round(size, 1) * default_size
+    default_size = stamper.window_width() * 0.125 # Default size, 1, is the size of the window divided by 8
+    size = round(size, 1) * default_size # Rounds 'size' to 1 decimal place and gets true size for stamp
 
-    stamper.colormode(255)
-    stamper.speed(speed)
-    stamper.pencolor(color)
+    stamper.colormode(255) # Color mode to rgb
+    stamper.speed(speed) # Sets speed
+    stamper.pencolor(color) # Sets color
 
-    # Moving
+    # Sets offset rotation and moves to bottom right of the bounding box
     stamper.seth(-rotation)
     stamper.penup()
     stamper.goto((x,y))
@@ -24,7 +24,7 @@ def place_stamp(stamper, x: float, y: float, color=(0,0,0), size=1, rotation=0, 
     stamper.forward((SQRT_2 * size) * 0.5)
     stamper.right(135)
     
-    # B
+    # Draws initial B
     stamper.pendown()
     stamper.forward(size)
     stamper.right(90)
@@ -32,13 +32,13 @@ def place_stamp(stamper, x: float, y: float, color=(0,0,0), size=1, rotation=0, 
     stamper.right(180)
     stamper.circle(-size/4,180)
 
-    # Moving
+    # Moves to bottom center of bounding box
     stamper.penup()
     stamper.right(180)
     stamper.forward(size/2)
     stamper.left(90)
     
-    # N
+    # Draws initial N
     stamper.pendown()
     stamper.forward(size)
     angle = degrees(atan(size / (size*.5)))
@@ -47,6 +47,7 @@ def place_stamp(stamper, x: float, y: float, color=(0,0,0), size=1, rotation=0, 
     stamper.left(90 + angle)
     stamper.forward(size)
     
+    # Resets position and rotation
     stamper.penup()
     stamper.goto((0,0))
     stamper.seth(0)
