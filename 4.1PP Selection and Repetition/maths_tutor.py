@@ -2,7 +2,7 @@
 4.1PP Selection and Repetition
 """
 
-__author__ = "YOUR NAME"
+__author__ = "Blake Natoli"
 
 import timeit # used for timing the execution of code
 from random import randint # used for generating random values
@@ -13,7 +13,7 @@ def show_heading(heading: str):
     Displays the given heading in ALL CAPS, underlined by plus (+) symbols
     and followed by a blank line.
     """
-    #TODO Complete the implementation of this function (replace the ellipsis ...)
+    print(f"{heading}\n{len(heading) * "+"}\n")
 
 
 def one_attempt(num1: int, num2: int) -> bool:
@@ -21,11 +21,22 @@ def one_attempt(num1: int, num2: int) -> bool:
     Tests the user's ability to answer a given problem, providing feedback on
     the attempt. Returns True if they answer correctly, False otherwise.
     """
-    attempt: int # the user's typed answer
+    attempt: int
 
-    #TODO Complete the implementation of this function
+    # Exception handling if user input can't be converted to an integer
+    try:
+        attempt = int(input(f"What is {num1} - {num2}? "))
+    except Exception:
+        attempt = None
 
-    return False #TODO Update this line
+    # Evaulates whether the user's attempt is correct or not
+    if num1 - num2 == attempt:
+        print("Correct!\n")
+        return True
+    else:
+        print(f"Incorrect. The correct answer is {num1 - num2}.\n")
+
+    return False
 
 
 def run_tutorial(max: int, target: int) -> int:
@@ -35,16 +46,22 @@ def run_tutorial(max: int, target: int) -> int:
     Returns the total number of attempts.
     """
     attempts = 0 # the total number of attempts made by the user
+    correct = 0 # the total number of correct attempts
 
-    #TODO Complete the implementation of this function
-    one_attempt(10, 5) #TODO Change these dummy parameter values
+    # Loop through asking questions if they haven't solved the required amount of problems
+    while correct < target:
+        a = randint(1, max) # Random num1
+        b = randint(1, max) # Random num2
+        attempts += 1
+        if one_attempt(a,b):
+            correct += 1
 
-    return 1 #TODO When implementing this function change this line to return attempts
+    return attempts
 
 
 def main():
-    MAX = 20 # maximum operand value of random numbers
-    REQUIRED = 5 # required number of correct answers
+    MAX = 100 # maximum operand value of random numbers
+    REQUIRED = 10 # required number of correct answers
     start_time: float # start time of tutorial
     end_time: float # end time of tutorial
     attempted: int # number of problems user attempted before solving REQUIRED problems
